@@ -10,7 +10,7 @@
 [Cheng Chi](http://cheng-chi.github.io/)<sup>1</sup>,
 [Siyuan Feng](https://www.cs.cmu.edu/~sfeng/)<sup>2</sup>,
 [Yilun Du](https://yilundu.github.io/)<sup>3</sup>,
-[Zhenjia Xu](https://yilundu.github.io/)<sup>1</sup>,
+[Zhenjia Xu](https://www.zhenjiaxu.com/)<sup>1</sup>,
 [Eric Cousineau](https://www.eacousineau.com/)<sup>2</sup>,
 [Benjamin Burchfiel](http://www.benburchfiel.com/)<sup>2</sup>,
 [Shuran Song](https://www.cs.columbia.edu/~shurans/)<sup>1</sup>
@@ -99,7 +99,7 @@ Software:
 `sudo apt install libosmesa6-dev libgl1-mesa-glx libglfw3 patchelf`
 * [RealSense SDK](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md)
 * Spacemouse dependencies: 
-`sudo apt apt install libspnav-dev spacenavd; sudo systemctl start spacenavd`
+`sudo apt install libspnav-dev spacenavd; sudo systemctl start spacenavd`
 * Conda environment `mamba env create -f conda_environment_real.yaml`
 
 ## 🖥️ Reproducing Simulation Benchmark Results 
@@ -204,7 +204,7 @@ data/outputs/2023.03.01/22.13.58_train_diffusion_unet_hybrid_pusht_image
 ```
 
 ## 🦾 Demo, Training and Eval on a Real Robot
-Make sure your UR5 robot is running and accepting command from its network interface (emergency stop button within reach at all time), your RealSense cameras plugged in to your workstation (tested with `realsense-viewer`) and your SpaceMouse connected with the `spacenavd` deamon running (verify with `systemctl status spacenavd`).
+Make sure your UR5 robot is running and accepting command from its network interface (emergency stop button within reach at all time), your RealSense cameras plugged in to your workstation (tested with `realsense-viewer`) and your SpaceMouse connected with the `spacenavd` daemon running (verify with `systemctl status spacenavd`).
 
 Start the demonstration collection script. Press "C" to start recording. Use SpaceMouse to move the robot. Press "S" to stop recording. 
 ```console
