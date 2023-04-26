@@ -144,3 +144,5 @@ robodiff
 
 # Supercloud logs
 *.log-*
+
+gcs_diffusion_policy_env
