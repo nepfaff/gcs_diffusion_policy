@@ -7,21 +7,23 @@ os.chdir(ROOT_DIR)
 
 from diffusion_policy.env_runner.robomimic_image_runner import RobomimicImageRunner
 
+
 def test():
     import os
     from omegaconf import OmegaConf
-    cfg_path = os.path.expanduser('~/dev/diffusion_policy/diffusion_policy/config/task/lift_image.yaml')
+
+    cfg_path = os.path.expanduser(
+        "~/dev/diffusion_policy/diffusion_policy/config/task/lift_image.yaml"
+    )
     cfg = OmegaConf.load(cfg_path)
-    cfg['n_obs_steps'] = 1
-    cfg['n_action_steps'] = 1
-    cfg['past_action_visible'] = False
-    runner_cfg = cfg['env_runner']
-    runner_cfg['n_train'] = 1
-    runner_cfg['n_test'] = 1
-    del runner_cfg['_target_']
-    runner = RobomimicImageRunner(
-        **runner_cfg, 
-        output_dir='/tmp/test')
+    cfg["n_obs_steps"] = 1
+    cfg["n_action_steps"] = 1
+    cfg["past_action_visible"] = False
+    runner_cfg = cfg["env_runner"]
+    runner_cfg["n_train"] = 1
+    runner_cfg["n_test"] = 1
+    del runner_cfg["_target_"]
+    runner = RobomimicImageRunner(**runner_cfg, output_dir="/tmp/test")
 
     # import pdb; pdb.set_trace()
 
@@ -34,5 +36,6 @@ def test():
 
     imgs = env.render()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     test()

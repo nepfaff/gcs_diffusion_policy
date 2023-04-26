@@ -7,20 +7,19 @@ os.chdir(ROOT_DIR)
 
 import numpy as np
 from multiprocessing.managers import SharedMemoryManager
-from diffusion_policy.shared_memory.shared_memory_queue import SharedMemoryQueue, Full, Empty
+from diffusion_policy.shared_memory.shared_memory_queue import (
+    SharedMemoryQueue,
+    Full,
+    Empty,
+)
 
 
 def test():
     shm_manager = SharedMemoryManager()
     shm_manager.start()
-    example = {
-        'cmd': 0,
-        'pose': np.zeros((6,))
-    }
+    example = {"cmd": 0, "pose": np.zeros((6,))}
     queue = SharedMemoryQueue.create_from_examples(
-        shm_manager=shm_manager,
-        examples=example,
-        buffer_size=3
+        shm_manager=shm_manager, examples=example, buffer_size=3
     )
     raised = False
     try:
@@ -29,14 +28,11 @@ def test():
         raised = True
     assert raised
 
-    data = {
-        'cmd': 1,
-        'pose': np.ones((6,))
-    }
+    data = {"cmd": 1, "pose": np.ones((6,))}
     queue.put(data)
     result = queue.get()
-    assert result['cmd'] == data['cmd']
-    assert np.allclose(result['pose'], data['pose'])
+    assert result["cmd"] == data["cmd"]
+    assert np.allclose(result["pose"], data["pose"])
 
     queue.put(data)
     queue.put(data)
@@ -50,18 +46,19 @@ def test():
     assert raised
 
     result = queue.get_all()
-    assert np.allclose(result['cmd'], [1,1,1])
-    
-    queue.put({'cmd': 0})
-    queue.put({'cmd': 1})
-    queue.put({'cmd': 2})
+    assert np.allclose(result["cmd"], [1, 1, 1])
+
+    queue.put({"cmd": 0})
+    queue.put({"cmd": 1})
+    queue.put({"cmd": 2})
     queue.get()
-    queue.put({'cmd': 3})
+    queue.put({"cmd": 3})
 
     result = queue.get_k(3)
-    assert np.allclose(result['cmd'], [1,2,3])
+    assert np.allclose(result["cmd"], [1, 2, 3])
 
     queue.clear()
+
 
 if __name__ == "__main__":
     test()

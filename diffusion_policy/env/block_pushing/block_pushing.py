@@ -189,7 +189,7 @@ class BlockPush(gym.Env):
         goal_dist_tolerance=0.01,
         effector_height=None,
         visuals_mode="default",
-        abs_action=False
+        abs_action=False,
     ):
         """Creates an env instance.
 

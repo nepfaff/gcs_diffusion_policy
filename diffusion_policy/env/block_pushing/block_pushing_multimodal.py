@@ -75,30 +75,31 @@ def build_env_name(task, shared_memory, use_image_obs):
 class BlockPushEventManager:
     def __init__(self):
         self.event_steps = {
-            'REACH_0': -1,
-            'REACH_1': -1,
-            'TARGET_0_0': -1,
-            'TARGET_0_1': -1,
-            'TARGET_1_0': -1,
-            'TARGET_1_1': -1
+            "REACH_0": -1,
+            "REACH_1": -1,
+            "TARGET_0_0": -1,
+            "TARGET_0_1": -1,
+            "TARGET_1_0": -1,
+            "TARGET_1_1": -1,
         }
-    
+
     def reach(self, step, block_id):
-        key = f'REACH_{block_id}'
+        key = f"REACH_{block_id}"
         if self.event_steps[key] < 0:
             self.event_steps[key] = step
-    
+
     def target(self, step, block_id, target_id):
-        key = f'TARGET_{block_id}_{target_id}'
+        key = f"TARGET_{block_id}_{target_id}"
         if self.event_steps[key] < 0:
             self.event_steps[key] = step
 
     def reset(self):
         for key in list(self.event_steps):
             self.event_steps[key] = -1
-    
+
     def get_info(self):
         return copy.deepcopy(self.event_steps)
+
 
 class BlockPushMultimodal(block_pushing.BlockPush):
     """2 blocks, 2 targets."""
@@ -111,7 +112,7 @@ class BlockPushMultimodal(block_pushing.BlockPush):
         shared_memory=False,
         seed=None,
         goal_dist_tolerance=0.05,
-        abs_action=False
+        abs_action=False,
     ):
         """Creates an env instance.
 
@@ -314,9 +315,7 @@ class BlockPushMultimodal(block_pushing.BlockPush):
             self._reset_object_poses(workspace_center_x, workspace_center_y)
 
         # else:
-        self._target_poses = [
-            self._get_target_pose(idx) for idx in self._target_ids
-        ]
+        self._target_poses = [self._get_target_pose(idx) for idx in self._target_ids]
 
         if reset_poses:
             self.step_simulation_to_stabilize()
@@ -410,7 +409,7 @@ class BlockPushMultimodal(block_pushing.BlockPush):
 
         info = self._event_manager.get_info()
         return state, reward, done, info
-    
+
     def _step_robot_and_sim(self, action):
         """Steps the robot and pybullet sim."""
         # Compute target_effector_pose by shifting the effector's pose by the
@@ -429,7 +428,8 @@ class BlockPushMultimodal(block_pushing.BlockPush):
         )
         target_effector_translation[-1] = self.effector_height
         target_effector_pose = Pose3d(
-            rotation=block_pushing.EFFECTOR_DOWN_ROTATION, translation=target_effector_translation
+            rotation=block_pushing.EFFECTOR_DOWN_ROTATION,
+            translation=target_effector_translation,
         )
 
         self._set_robot_target_effector_pose(target_effector_pose)
@@ -499,7 +499,9 @@ class BlockPushMultimodal(block_pushing.BlockPush):
                         logger.info(
                             f"Block {b_i} entered target {t_i} on step {self._step_num}"
                         )
-                        self._event_manager.target(step=self._step_num, block_id=b_i, target_id=t_i)
+                        self._event_manager.target(
+                            step=self._step_num, block_id=b_i, target_id=t_i
+                        )
                         reward += 0.49
 
         b0_closest_target, b0_in_target = _closest_target("block")

@@ -1,7 +1,1 @@
-{
-    "exclude": [
-        "data/**",
-        "data_local/**",
-        "outputs/**"
-    ]
-}
+{"exclude": ["data/**", "data_local/**", "outputs/**"]}

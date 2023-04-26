@@ -11,20 +11,28 @@ import time
 from multiprocessing.managers import SharedMemoryManager
 from diffusion_policy.real_world.single_realsense import SingleRealsense
 
+
 def test():
-    
+
     serials = SingleRealsense.get_connected_devices_serial()
     # import pdb; pdb.set_trace()
     serial = serials[0]
-    config = json.load(open('/home/cchi/dev/diffusion_policy/diffusion_policy/real_world/realsense_config/415_high_accuracy_mode.json', 'r'))
+    config = json.load(
+        open(
+            "/home/cchi/dev/diffusion_policy/diffusion_policy/real_world/realsense_config/415_high_accuracy_mode.json",
+            "r",
+        )
+    )
 
     def transform(data):
-        color = data['color']
-        h,w,_ = color.shape
+        color = data["color"]
+        h, w, _ = color.shape
         factor = 2
-        color = cv2.resize(color, (w//factor,h//factor), interpolation=cv2.INTER_AREA)
+        color = cv2.resize(
+            color, (w // factor, h // factor), interpolation=cv2.INTER_AREA
+        )
         # color = color[:,140:500]
-        data['color'] = color
+        data["color"] = color
         return data
 
     # at 960x540 with //3, 60fps and 30fps are indistinguishable
@@ -33,7 +41,7 @@ def test():
         with SingleRealsense(
             shm_manager=shm_manager,
             serial_number=serial,
-            resolution=(1280,720),
+            resolution=(1280, 720),
             # resolution=(960,540),
             # resolution=(640,480),
             capture_fps=30,
@@ -44,14 +52,13 @@ def test():
             # transform=transform,
             # recording_transform=transform
             # verbose=True
-            ) as realsense:
-            cv2.setNumThreads(1) 
+        ) as realsense:
+            cv2.setNumThreads(1)
             realsense.set_exposure(exposure=150, gain=5)
             intr = realsense.get_intrinsics()
             print(intr)
 
-
-            video_path = 'data_local/test.mp4'
+            video_path = "data_local/test.mp4"
             rec_start_time = time.time() + 2
             realsense.start_recording(video_path, start_time=rec_start_time)
 
@@ -66,9 +73,9 @@ def test():
                 # print(dt)
                 # print(data['capture_timestamp'] - rec_start_time)
 
-                bgr = data['color']
+                bgr = data["color"]
                 # print(bgr.shape)
-                cv2.imshow('default', bgr)
+                cv2.imshow("default", bgr)
                 key = cv2.pollKey()
                 # if key == ord('q'):
                 #     break
@@ -77,8 +84,8 @@ def test():
                 #     realsense.start_recording(video_path)
                 # elif key == ord('s'):
                 #     realsense.stop_recording()
-                
-                time.sleep(1/60)
+
+                time.sleep(1 / 60)
                 if time.time() > (rec_start_time + 20.0):
                     break
 

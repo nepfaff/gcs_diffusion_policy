@@ -17,20 +17,23 @@
 import numpy as np
 from collections import deque
 
+
 class BaseRobot(object):
     """Base class for all robot classes."""
 
-    def __init__(self,
-                 n_jnt,
-                 n_obj,
-                 pos_bounds=None,
-                 vel_bounds=None,
-                 calibration_path=None,
-                 is_hardware=False,
-                 device_name=None,
-                 overlay=False,
-                 calibration_mode=False,
-                 observation_cache_maxsize=5):
+    def __init__(
+        self,
+        n_jnt,
+        n_obj,
+        pos_bounds=None,
+        vel_bounds=None,
+        calibration_path=None,
+        is_hardware=False,
+        device_name=None,
+        overlay=False,
+        calibration_mode=False,
+        observation_cache_maxsize=5,
+    ):
         """Create a new robot.
         Args:
             n_jnt: The number of dofs in the robot.
@@ -79,7 +82,6 @@ class BaseRobot(object):
 
         # Gets updated
         self._observation_cache = deque([], maxlen=self._observation_cache_maxsize)
-
 
     @property
     def n_jnt(self):
@@ -133,7 +135,6 @@ class BaseRobot(object):
     def observation_cache(self):
         return self._observation_cache
 
-
     def clip_positions(self, positions):
         """Clips the given joint positions to the position bounds.
 
@@ -146,6 +147,5 @@ class BaseRobot(object):
         if self.pos_bounds is None:
             return positions
         assert len(positions) == self.n_jnt or len(positions) == self.n_dofs
-        pos_bounds = self.pos_bounds[:len(positions)]
+        pos_bounds = self.pos_bounds[: len(positions)]
         return np.clip(positions, pos_bounds[:, 0], pos_bounds[:, 1])
-

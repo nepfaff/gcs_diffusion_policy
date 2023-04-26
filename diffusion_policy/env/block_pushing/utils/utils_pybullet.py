@@ -69,13 +69,14 @@ def load_urdf(pybullet_client, file_path, *args, **kwargs):
 
     try:
         import pathlib
-        asset_path = str(pathlib.Path(__file__).parent.parent.joinpath('assets'))
+
+        asset_path = str(pathlib.Path(__file__).parent.parent.joinpath("assets"))
         if file_path.startswith("third_party/py/envs/assets/"):
             pybullet_client.setAdditionalSearchPath(asset_path)
             file_path = file_path[len("third_party/py/envs/assets/") :]
         if file_path.startswith(
             "third_party/bullet/examples/pybullet/gym/pybullet_data/"
-            ):
+        ):
             pybullet_client.setAdditionalSearchPath(pybullet_data.getDataPath())
             file_path = file_path[55:]
         # logging.info("Loading URDF %s", file_path)
@@ -423,6 +424,7 @@ def _deserialize_pybullet_state(state):
 def write_pybullet_state(filename, pybullet_state, task, actions=None):
     """Serialize pybullet state to json file."""
     import torch
+
     data = {
         "pybullet_state": _serialize_pybullet_state(pybullet_state),
         "state_version": PYBULLET_STATE_VERSION,
@@ -437,6 +439,7 @@ def write_pybullet_state(filename, pybullet_state, task, actions=None):
 def read_pybullet_state(filename):
     """Deserialize pybullet state from json file."""
     import torch
+
     data = torch.load(filename)
 
     assert isinstance(data, dict)

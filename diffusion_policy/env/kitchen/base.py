@@ -1,7 +1,10 @@
 import sys
 import os
+
 # hack to import adept envs
-ADEPT_DIR = os.path.join(os.path.dirname(__file__), 'relay_policy_learning', 'adept_envs')
+ADEPT_DIR = os.path.join(
+    os.path.dirname(__file__), "relay_policy_learning", "adept_envs"
+)
 sys.path.append(ADEPT_DIR)
 
 import logging
@@ -52,7 +55,10 @@ class KitchenBase(KitchenTaskRelaxV1):
     )
 
     def __init__(
-        self, dataset_url=None, ref_max_score=None, ref_min_score=None, 
+        self,
+        dataset_url=None,
+        ref_max_score=None,
+        ref_min_score=None,
         use_abs_action=False,
         **kwargs
     ):
