@@ -146,3 +146,4 @@ robodiff
 *.log-*
 
 gcs_diffusion_policy_env
+.venv
